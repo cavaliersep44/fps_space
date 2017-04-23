@@ -27,7 +27,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
-
+		public GameObject Player;
         private Camera m_Camera;
         private bool m_Jump;
         private float m_YRotation;
@@ -41,7 +41,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
-
+		float axisValue = 0; 
+		public float value = 10.0f; 
         // Use this for initialization
         private void Start()
         {
@@ -59,8 +60,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
 
         // Update is called once per frame
-        private void Update()
-        {
+		private void Update(){
+		if (Input.GetKey("c")){
+			Player.transform.position = new Vector3 (transform.position.x,4.6f,transform.position.z);
+				m_IsWalking = !Input.GetKey("c");
+           
+
+
+		}
+        
             RotateView();
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
@@ -212,7 +220,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 #if !MOBILE_INPUT
             // On standalone builds, walk/run speed is modified by a key press.
             // keep track of whether or not the character is walking or running
-            m_IsWalking = !Input.GetKey(KeyCode.LeftShift);
+            m_IsWalking = !Input.GetKey("c");
 #endif
             // set the desired speed to be walking or running
             speed = m_IsWalking ? m_WalkSpeed : m_RunSpeed;
