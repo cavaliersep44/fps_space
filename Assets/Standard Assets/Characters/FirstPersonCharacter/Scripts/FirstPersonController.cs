@@ -61,13 +61,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         // Update is called once per frame
 		private void Update(){
-		if (Input.GetKey("c")){
-			Player.transform.position = new Vector3 (transform.position.x,4.6f,transform.position.z);
-				m_IsWalking = !Input.GetKey("c");
+			if (Input.GetKey ("c")) {
+				Player.transform.position = new Vector3 (transform.position.x, 4.5f, transform.position.z);
+			}
            
 
-
-		}
+		 
         
             RotateView();
             // the jump state needs to read here to make sure it is not missed
