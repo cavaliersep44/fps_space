@@ -27,7 +27,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
-		public GameObject Player;
+
         private Camera m_Camera;
         private bool m_Jump;
         private float m_YRotation;
@@ -41,8 +41,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
-		float axisValue = 0; 
-		public float value = 10.0f; 
+		public GameObject Player;
+
         // Use this for initialization
         private void Start()
         {
@@ -60,14 +60,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
 
         // Update is called once per frame
-		private void Update(){
-			if (Input.GetKey ("c")) {
-				Player.transform.position = new Vector3 (transform.position.x, 4.5f, transform.position.z);
-			}
-           
+        private void Update()
+        {
+//			if(Input.GetKey("c")){
+//				Player.transform.position = new Vector3 (transform.position.x, 4.5f, transform.position.z);
 
-		 
-        
+
+			if (Input.GetMouseButtonDown (0)) {
+				
+			}
             RotateView();
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
@@ -88,6 +89,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
 
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
+
+			m_WalkSpeed = 5f;
+			if (Input.GetKey ("c")) {
+				Camera.main.transform.position += new Vector3 (0f, -1f, 0f);
+				m_WalkSpeed = 2f;
+			}
+
         }
 
 
@@ -262,5 +270,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
         }
-    }
+		private void shot ()
+		{
+		}
+	}
+
+
+
+		
+    
 }
