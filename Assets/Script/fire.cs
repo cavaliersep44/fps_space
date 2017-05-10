@@ -18,10 +18,7 @@ public class fire : MonoBehaviour {
 		ReloadSound = Resources.Load<AudioClip>("Audio/reload");//Resourcesフォルダを作成しないとロードできない。//Audioファイルも生成する。
 		audioSource = transform.GetComponent<AudioSource>();
 		startBullet = Bullet;
-
-
-
-	}
+		}
 	
 	// Update is called once per frame
 	void Update () {
@@ -34,7 +31,7 @@ public class fire : MonoBehaviour {
 		}
 
 		coolTime -= Time.deltaTime;
-		if (Input.GetMouseButtonDown (0) && coolTime <=0f) {
+		if (Input.GetMouseButtonDown (0) && coolTime <=0f && Bullet !=0) { //!＝０にすることで０じゃないときうてて、０のときうてない
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit hit;
 			GameObject obj1 = Instantiate (fireeffect2, spawn.transform.position, Quaternion.identity);
@@ -55,14 +52,19 @@ public class fire : MonoBehaviour {
 		}
 	}
 	void Reload () {
-		audioSource.PlayOneShot (ReloadSound);
+		audioSource.PlayOneShot (ReloadSound); 
 		reloadbullet = startBullet - Bullet;
-		Bulletbox -= reloadbullet;
-		Bullet += reloadbullet;
 		if (Bulletbox < reloadbullet) {
 			Bullet += Bulletbox;
-		}
+			Bulletbox = 0;
+
+
+		}else{
+		Bulletbox -= reloadbullet;
+		Bullet += reloadbullet;
+
 
 
 		}
 	}
+}
