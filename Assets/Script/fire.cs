@@ -14,6 +14,9 @@ public class fire : MonoBehaviour {
 	[SerializeField] private GameObject Marker;
 	[SerializeField] private ScoreScript ScoreManager;
 	[SerializeField] private GameObject camera;
+	[SerializeField] private GameObject Scope;
+	[SerializeField] private GameObject ScopeCamera;
+	[SerializeField] private bool IsScope;
 	private int reloadbullet;
 	private int startBullet;
 	private int score;
@@ -27,6 +30,7 @@ public class fire : MonoBehaviour {
 		ReloadSound = Resources.Load<AudioClip>("Audio/reload");//Resourcesフォルダを作成しないとロードできない。//Audioファイルも生成する。
 		audioSource = transform.GetComponent<AudioSource>();
 		startBullet = Bullet;
+		Scope.SetActive (false);
 		}
 	
 	// Update is called once per frame
@@ -56,8 +60,12 @@ public class fire : MonoBehaviour {
 					TargetScript t =Target.GetComponent<TargetScript> ();
 					t.TargetControl ();
 					ScoreManager.Scoreplus (dis);
+
 				}
 			}
+		}
+		if (Input.GetMouseButtonDown (1)) {
+			ScopeMethod ();
 		}
 	}
 	void Reload () {
@@ -70,6 +78,19 @@ public class fire : MonoBehaviour {
 		Bulletbox -= reloadbullet;
 		Bullet += reloadbullet;
 			}
+	}
+	void ScopeMethod () {
+		Camera camera = ScopeCamera.GetComponent<Camera> ();
+		if (!IsScope) { //Scopeがfalseの場合。
+			Scope.SetActive (true);
+			IsScope = true;
+			camera.fieldOfView = 30;
+		} else {
+			Scope.SetActive (false);
+			IsScope = false;
+			camera.fieldOfView = 60;
+		}
+		
 	}
 
 }
