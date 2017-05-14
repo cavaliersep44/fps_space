@@ -6,14 +6,14 @@ public class fire : MonoBehaviour {
 	[SerializeField] private GameObject fireeffect1;
 	[SerializeField] private GameObject fireeffect2;
 	[SerializeField] private GameObject spawn;
-	[SerializeField] private int Bullet;
-	[SerializeField] private int Bulletbox;
+	[SerializeField] public int Bullet;
+	[SerializeField] public int Bulletbox;
 	[SerializeField] private GameObject Target;
 	[SerializeField] private  TargetScript enemy;
 	[SerializeField] private GameObject Headmarker;
-	[SerializeField] private GameObject obja;
-	[SerializeField] private GameObject objb;
+	[SerializeField] private GameObject Marker;
 	[SerializeField] private ScoreScript ScoreManager;
+	[SerializeField] private GameObject camera;
 	private int reloadbullet;
 	private int startBullet;
 	private int score;
@@ -31,10 +31,6 @@ public class fire : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Vector3 Marker = obja.transform.position;
-		
-		
-
 		if (Input.GetKeyDown ("r") && Bulletbox > 0 ) {
 			Reload ();
 				}
@@ -42,7 +38,7 @@ public class fire : MonoBehaviour {
 		coolTime -= Time.deltaTime;
 		Target.GetComponent<TargetScript> ();
 		if (Input.GetMouseButtonDown (0) && coolTime <=0f && Bullet !=0) { //!＝０にすることで０じゃないときうてて、０のときうてない
-			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+			Ray ray = new Ray (camera.transform.position ,camera.transform.forward);
 			RaycastHit hit;
 			GameObject obj1 = Instantiate (fireeffect2, spawn.transform.position, Quaternion.identity);
 			Destroy (obj1, 0.3f);
@@ -54,7 +50,7 @@ public class fire : MonoBehaviour {
 				Destroy (obj, 0.3f);
 				enemy = hit.collider.gameObject.GetComponent<TargetScript> ();
 				Vector3 hitpoint = hit.point;
-				float dis = Vector3.Distance (obja.transform.position, hitpoint);
+				float dis = Vector3.Distance (Marker.transform.position, hitpoint);
 
 				if(enemy !=null){
 					TargetScript t =Target.GetComponent<TargetScript> ();
@@ -70,14 +66,10 @@ public class fire : MonoBehaviour {
 		if (Bulletbox < reloadbullet) {
 			Bullet += Bulletbox;
 			Bulletbox = 0;
-
-
 		}else{
 		Bulletbox -= reloadbullet;
 		Bullet += reloadbullet;
-
-
-
-		}
+			}
 	}
+
 }
